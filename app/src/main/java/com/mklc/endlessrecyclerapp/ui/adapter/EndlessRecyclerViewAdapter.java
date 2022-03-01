@@ -28,6 +28,7 @@ public class EndlessRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             ItemUserBinding itemUserBinding = ItemUserBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
             return new UserViewHolder(itemUserBinding);
         }
+        //last item of the list will be seen as a progress indicator
         ItemLoaderBinding itemLoaderBinding = ItemLoaderBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new LoaderViewHolder(itemLoaderBinding);
     }

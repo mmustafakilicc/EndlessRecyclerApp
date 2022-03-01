@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         userViewModel.loadUsers(currentPage);
     }
 
+    //if scroll reaches at the end of the adapter's last item
+    //new items will be loaded from remote server
     private final RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
         @Override
         public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
