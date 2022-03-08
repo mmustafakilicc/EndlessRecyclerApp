@@ -4,27 +4,30 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mklc.endlessrecyclerapp.data.model.network.User;
 import com.mklc.endlessrecyclerapp.databinding.ActivityMainBinding;
 import com.mklc.endlessrecyclerapp.ui.adapter.EndlessRecyclerViewAdapter;
+import com.mklc.endlessrecyclerapp.ui.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
+    //region variables
     private ActivityMainBinding binding;
-    private UserViewModel userViewModel;
     private int currentPage = 1;
     private List<User> userList;
     private boolean isLoading;
     private EndlessRecyclerViewAdapter adapter;
     private LinearLayoutManager linearLayoutManager;
+
+    private UserViewModel userViewModel;
+
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initialize() {
 
+        userViewModel = viewModelFactory.create(UserViewModel.class);
+
         userList = new ArrayList<>();
         adapter = new EndlessRecyclerViewAdapter(userList);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -43,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerViewMAUserList.setAdapter(adapter);
         binding.recyclerViewMAUserList.addOnScrollListener(scrollListener);
 
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+//        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         userViewModel.getLiveDataUserList().observe(this, this::controlUserResult);
         loadMore(currentPage);
 
@@ -52,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private void controlUserResult(List<User> userList) {
         if (userList != null && userList.size() > 0) {
             // loading ViewType will be moved to last index of list
-            if(this.userList.size() > 0){
+            if (this.userList.size() > 0) {
                 this.userList.remove(this.userList.size() - 1);
             }
             this.userList.addAll(userList);
@@ -82,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 isLoading = true;
                 if (linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() >= adapter.getItemCount() - 1) {
                     loadMore(currentPage);
-                }else {
+                } else {
                     isLoading = false;
                 }
             }

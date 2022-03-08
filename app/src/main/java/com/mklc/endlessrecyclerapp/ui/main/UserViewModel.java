@@ -1,28 +1,27 @@
 package com.mklc.endlessrecyclerapp.ui.main;
 
-import android.app.Application;
-
 import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.mklc.endlessrecyclerapp.data.model.network.User;
-import com.mklc.endlessrecyclerapp.data.network.ApiClient;
-import com.mklc.endlessrecyclerapp.data.network.ApiService;
+import com.mklc.endlessrecyclerapp.data.network.repository.UserRepository;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserViewModel extends AndroidViewModel {
+public class UserViewModel extends ViewModel {
 
-    private final ApiService apiService;
+    private final UserRepository userRepository;
 
-    public UserViewModel(@NonNull Application application) {
-        super(application);
-        apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+    @Inject
+    public UserViewModel(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     private MutableLiveData<List<User>> liveDataUserList;
@@ -38,7 +37,7 @@ public class UserViewModel extends AndroidViewModel {
 
         getLiveDataUserList().setValue(null);
 
-        apiService.getUsers(page).enqueue(new Callback<List<User>>() {
+        userRepository.loadUsers(page).enqueue(new Callback<List<User>>() {
             @Override
             public void onResponse(@NonNull Call<List<User>> call, @NonNull Response<List<User>> response) {
                 if (response.isSuccessful()) {
