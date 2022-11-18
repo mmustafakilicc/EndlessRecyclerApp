@@ -1,42 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="5dp"
-    app:cardCornerRadius="5dp"
-    app:cardBackgroundColor="@color/black">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+        <variable
+            name="index"
+            type="String" />
+        <variable
+            name="user"
+            type="com.mklc.endlessrecyclerapp.data.UserDto" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="5dp">
+        android:layout_margin="5dp"
+        app:cardCornerRadius="5dp"
+        app:cardBackgroundColor="@color/black">
 
-        <TextView
-            android:id="@+id/textViewUIName"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textColor="@color/purple_200"
-            android:text="@string/app_name"/>
+            android:orientation="vertical"
+            android:padding="5dp">
 
-        <TextView
-            android:id="@+id/textViewUIEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textColor="@color/white"
-            android:text="@string/app_name"/>
+            <TextView
+                android:id="@+id/textViewIUIndex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/teal_200"
+                android:text="@{index}"
+                tools:text="1"/>
 
-        <TextView
-            android:id="@+id/textViewUIStatus"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:textColor="@color/white"
-            android:text="@string/app_name"/>
+            <TextView
+                android:id="@+id/textViewIUName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/purple_200"
+                android:text="@{user.name}"
+                tools:text="User Name"/>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/textViewIUEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:text="@{user.mail}"
+                tools:text="E-mail"/>
 
-</com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/textViewIUStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:text="@{user.status}"
+                tools:text="Status"/>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>
